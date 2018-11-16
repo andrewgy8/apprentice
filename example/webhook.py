@@ -1,4 +1,5 @@
 import random
+
 import requests
 
 from apprentice import action_handler

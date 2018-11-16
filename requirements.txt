@@ -6,3 +6,4 @@ flake8
 Flask>=1.0,<1.1
 twine>=1.12,<1.13
 pytest-sugar>=0.3, <0.4
+flake8-isort>=2.5, <2.6

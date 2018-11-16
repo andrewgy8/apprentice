@@ -1,6 +1,6 @@
 from flask import Response
 
-from apprentice.core import generate_intent_response, format_response
+from apprentice.core import format_response, generate_intent_response
 from apprentice.helpers import action_ctx
 
 

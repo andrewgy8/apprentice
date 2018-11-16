@@ -9,7 +9,7 @@ import os
 import sys
 from shutil import rmtree
 
-from setuptools import find_packages, setup, Command
+from setuptools import Command, find_packages, setup
 
 # Package meta-data.
 NAME = 'apprentice'
@@ -22,7 +22,7 @@ REQUIRES_PYTHON = '>=3.6.0'
 VERSION = None
 
 # What packages are required for this module to be executed?
-REQUIRED = []
+REQUIRED = ["flask", ]
 
 # What packages are optional?
 EXTRAS = {}
@@ -105,7 +105,7 @@ setup(
     #     'console_scripts': ['mycli=mymodule:cli'],
     # },
     install_requires=REQUIRED,
-    setup_requires=["pytest-runner"],
+    setup_requires=["pytest-runner", "flake8"],
     tests_require=["pytest"],
     extras_require=EXTRAS,
     include_package_data=True,

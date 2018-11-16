@@ -1,8 +1,8 @@
 import pytest
 import responses
 
-from example.webhook import cool_fact_generator, _fact_response
 from apprentice.helpers import action_ctx
+from example.webhook import _fact_response, cool_fact_generator
 
 
 @pytest.fixture(autouse=True)
@@ -33,10 +33,10 @@ class TestCoolFactGenerator:
             'displayText': None,
             'messages': [{
                 'speech': 'Today, in the year 308 At Carnuntum, Emperor '
-                          'emeritus Diocletian confers with Galerius, Augustus '
-                          'of the East, and Maximianus, the recently returned '
-                          'former Augustus of the West, in an attempt to end '
-                          'the civil wars of the Tetrarchy.',
+                          'emeritus Diocletian confers with Galerius, '
+                          'Augustus of the East, and Maximianus, the recently '
+                          'returned former Augustus of the West, in an '
+                          'attempt to end the civil wars of the Tetrarchy.',
                 'type': 0
             }],
             'source': 'webhook',
