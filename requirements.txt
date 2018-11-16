@@ -1,0 +1,8 @@
+pytest>=3.10, <3.11
+pytest-responses>=0.3, <0.4
+requests>=2.20, <2.21
+responses>=0.10, <0.11
+flake8
+Flask>=1.0,<1.1
+twine>=1.12,<1.13
+pytest-sugar>=0.3, <0.4
