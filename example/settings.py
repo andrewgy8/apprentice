@@ -1,8 +1,9 @@
 
 ENTITIES = {
   "name": "History",
-  "entries": [{
-    "value": "history",
+  "entries": [
+    {
+      "value": "history",
       "synonyms": [
         "history",
         "past event",
