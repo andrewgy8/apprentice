@@ -125,4 +125,9 @@ setup(
     cmdclass={
         'upload': UploadCommand,
     },
+    entry_points={
+        'console_scripts': [
+            'apprentice = apprentice.__main__:main'
+        ]
+    }
 )
