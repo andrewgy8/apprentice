@@ -1,7 +1,7 @@
 from flask import Response
 
 from apprentice.core import format_response, generate_intent_response
-from apprentice.helpers import action_ctx
+from apprentice.helpers import action_ctx_test
 
 
 class TestGenerateIntentResponse:
@@ -54,8 +54,8 @@ class TestGenerateIntentResponse:
 
 class TestFormatResponse:
 
-    @action_ctx
-    def test_returns_flask_response_object_when_called(self):
+    @action_ctx_test
+    def test_returns_flask_response_object(self):
         data = {'msg': 'hello world'}
         res = format_response(data)
 
