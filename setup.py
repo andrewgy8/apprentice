@@ -13,8 +13,8 @@ from setuptools import Command, find_packages, setup
 
 # Package meta-data.
 NAME = 'apprentice'
-DESCRIPTION = 'The apprentice will help in creating assistant ' \
-              'server-less functions.'
+DESCRIPTION = 'Apprentice is a library for deploying and developing actions ' \
+              'via Dialogflow and Google Cloud Functions.'
 URL = 'https://github.com/andrewgy8/apprentice'
 EMAIL = 'andrewgy8@gmail.com'
 AUTHOR = 'Andrew Graham-Yooll'

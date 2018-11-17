@@ -1,8 +1,7 @@
 import pytest
 import responses
 
-from apprentice.helpers import action_ctx
-from example.webhook import _fact_response, cool_fact_generator
+from example.main import _fact_response, app
 
 
 @pytest.fixture(autouse=True)
@@ -16,10 +15,9 @@ def api_response(historical_fact_response):
 
 class TestCoolFactGenerator:
 
-    @action_ctx
-    def test_returns_response_with_json_when_called(self):
-        request = {}
-        res = cool_fact_generator(request)
+    def test_returns_response_with_json_when_called(self, birth_post_data):
+        with app.test_client() as c:
+            res = c.post('/', json=birth_post_data)
 
         assert res.json == {
             'contextOut': [],
@@ -32,7 +30,7 @@ class TestCoolFactGenerator:
             },
             'displayText': None,
             'messages': [{
-                'speech': 'Today, in the year 308 At Carnuntum, Emperor '
+                'speech': 'Today in the year 308, At Carnuntum, Emperor '
                           'emeritus Diocletian confers with Galerius, '
                           'Augustus of the East, and Maximianus, the recently '
                           'returned former Augustus of the West, in an '
@@ -40,17 +38,16 @@ class TestCoolFactGenerator:
                 'type': 0
             }],
             'source': 'webhook',
-            'speech': 'Today, in the year 308 At Carnuntum, Emperor '
+            'speech': 'Today in the year 308, At Carnuntum, Emperor '
                       'emeritus Diocletian confers with Galerius, Augustus '
                       'of the East, and Maximianus, the recently returned '
                       'former Augustus of the West, in an attempt to end '
                       'the civil wars of the Tetrarchy.'
         }
 
-    @action_ctx
-    def test_returns_content_type_json_when_called(self):
-        request = {}
-        res = cool_fact_generator(request)
+    def test_returns_content_type_json_when_called(self, birth_post_data):
+        with app.test_client() as c:
+            res = c.post('/', json=birth_post_data)
 
         assert res.headers['Content-Type'] == 'application/json'
 
@@ -58,9 +55,9 @@ class TestCoolFactGenerator:
 class TestFactResponse:
 
     def test_returns_structured_json_object(self):
-        res = _fact_response()
+        res = _fact_response('history')
 
-        assert res == 'Today, in the year 308 At Carnuntum, Emperor ' \
+        assert res == 'Today in the year 308, At Carnuntum, Emperor ' \
                       'emeritus Diocletian confers with Galerius, Augustus ' \
                       'of the East, and Maximianus, the recently returned ' \
                       'former Augustus of the West, in an attempt to end ' \
