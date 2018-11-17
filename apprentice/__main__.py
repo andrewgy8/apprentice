@@ -1,5 +1,6 @@
 import click
-from .cli import initialize, deploy
+
+from .cli import deploy, initialize
 
 
 @click.group()
@@ -17,5 +18,3 @@ def version():
 main.add_command(version)
 main.add_command(initialize.init)
 main.add_command(deploy.deploy)
-
-
