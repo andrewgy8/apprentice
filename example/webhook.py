@@ -2,12 +2,13 @@ import random
 
 import requests
 
-from apprentice import action_handler
+from apprentice import format_response, generate_intent_response
 
 
-@action_handler()
 def cool_fact_generator(*args, **kwargs):
-    return _fact_response()
+    data = _fact_response()
+    formatted_data = generate_intent_response(data)
+    return format_response(formatted_data)
 
 
 def _fact_response():

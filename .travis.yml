@@ -1,14 +1,21 @@
 language: python
 python:
-  - "2.7"
-  - "3.5"
-  - "3.5-dev"  # 3.5 development branch
-  - "3.6"
-  - "3.6-dev"  # 3.6 development branch
-  - "3.7"
-  - "3.7-dev"  # 3.7 development branch
+- '2.7'
+- '3.5'
+- 3.5-dev
+- '3.6'
+- 3.6-dev
+- '3.7'
+- 3.7-dev
 install:
-  - pip install -r requirements.txt
+- pip install -r requirements.txt
 script:
-  - python setup.py test
-  - flake8
+- python setup.py test
+- python setup.py flake8
+deploy:
+  provider: pypi
+  user: andrewgy8
+  password:
+    secure: F3Y3+XaTIC6eRD6qdxL2xPof79mFophVbsTnhT2kVwiU3QNqGk3QxR1B/DJXfaOTas1xX+VMf8WhQoqdzG11Wr5yQHivzDTyKXN2EqFqJgEM29SIafUdRt8crWHtbj4hN+uhzNCenCr3Y44DU9j4DyUsfrh3O/prgy8bbm8M4zWHqGkUIEgoEOe5SEQqNVCvv21hBcODSySDe4Lvyw5q/KfnKywE33EpcXMltkOeKXy40rkqdzUTc0LTPdvfl386ogRM3ifo3jtFm8QmGVZHpwJatI/mAdgfv8qDON1zZXKmZi8xGI/5QaKy1+Xjvhpa0aajCuURGtfm+R5VIq8fXI+efOE6SbDjYMOiW94YMlNPymsEMhHJwM6mVx8ycctV644CKcLEQhDgLWiEeaN/cKlO/iec3gGizIgF0MixdLk6cPcksbV7V06GjOmMY8Srkx4Q+LB9RBTcg9o0+0v9bsL5h4A5OlZSuhCeGG/j/flS3r9E5x+U9JaR5nSIzps1TNxjJ7SEWHHyge/IY10fZ0vaFVs9t7J9FgFOskBdjxJ8WzQwAFUebUdR/caOI/0We1xkvOW2+3IjrjuN40JfWM4+gdiq6xmMN6smIofJiRTJ6YCkZSXCQSMVVIv5n0sNX2Afuvnj4XUqTx+X18PUDOYKg5TDn0P714poj8FJXaI=
+  on:
+    tags: true
