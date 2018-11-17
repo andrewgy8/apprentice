@@ -5,15 +5,35 @@ from flask import Flask, request
 
 from apprentice import format_response, generate_intent_response
 
-from . import settings
-
 app = Flask(__name__)
+
+ENTITIES = {
+  "name": "History",
+  "entries": [
+    {
+      "value": "history",
+      "synonyms": [
+        "history",
+        "past event",
+        "the past",
+        "past"
+      ]
+    }, {
+      "value": "birth",
+      "synonyms": [
+        "birth",
+        "births",
+        "born"
+      ]
+    }
+  ]
+}
 
 
 @app.route('/', methods=['POST'])
 def cool_fact_generator(*args, **kwargs):
     ac = request.json['result']['parameters']
-    name = settings.ENTITIES.get('name')
+    name = ENTITIES.get('name')
     entity = ac[name]
     phrase = _fact_response(entity)
     formatted_data = generate_intent_response(phrase)
