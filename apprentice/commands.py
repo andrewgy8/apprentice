@@ -1,4 +1,9 @@
+import os
+
 import click
+from flask.cli import DispatchingApp, pass_script_info, show_server_banner
+from flask.helpers import get_env
+from werkzeug.serving import run_simple
 
 MAIN_CONTENT = """from flask import Flask
 
@@ -32,7 +37,6 @@ def version():
 @click.command(help='Initialize a project')
 def init():
     dir_name = 'hello_world_agent'
-    import os
     if os.path.exists(dir_name):
         click.echo(f'{dir_name} already exists.')
         raise click.Abort()
@@ -70,6 +74,21 @@ def deploy(func, source, entry_point, region):
     click.echo(f'Deploy with command: {deploy_command}')
 
 
+@click.command(help='Run a test server for local development')
+@pass_script_info
+def run(info):
+    debug = True
+
+    # Check that the user has added a proper Flask App
+    info.load_app()
+
+    show_server_banner(get_env(), debug, info.app_import_path, None)
+    app = DispatchingApp(info.load_app, use_eager_loading=None)
+    run_simple('127.0.0.1', 5000, app, use_reloader=debug, use_debugger=debug,
+               threaded=True)
+
+
 main.add_command(version)
 main.add_command(init)
 main.add_command(deploy)
+main.add_command(run)
