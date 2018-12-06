@@ -1,6 +1,14 @@
 # Changelog
 
-### master
+### v0.1.7
+
+Clean up the public API interface for Apprentice (#24)
+- Implement Apprentice class.
+- Built in flask app.
+- No need to instantiate a flask app yourself
+- Update commands and readme with new api interface
+
+### v0.1.6
 - Add apprentice run command #20
 - Add tests to cli commands. #15
 
