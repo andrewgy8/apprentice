@@ -2,6 +2,8 @@ import json
 
 from flask import Flask, make_response
 
+from marshmallow import Schema, fields
+
 
 def response(data):
     resp = json.dumps(data, indent=4)
@@ -52,3 +54,31 @@ class Apprentice(Flask):
     def response(self, reply):
         res = intent_response(reply)
         return response(res)
+
+
+class MessageSchema(Schema):
+    type = fields.Int()
+    speech = fields.Str()
+
+
+class ResponseSchema(Schema):
+    expect_user_response = fields.Bool()
+
+
+class UserSchema(Schema):
+    expect_user_response = fields.Bool()
+    is_ssml = fields.Bool()
+    permissions_request = fields.Bool()
+
+
+class MetaSchema(Schema):
+    google = fields.Nested()
+
+
+class IntentSchema(Schema):
+    speech = fields.Str()
+    displayText = fields.Str()
+    messages = fields.Nested(MessageSchema, many=True)
+    data = fields.Nested(MetaSchema)
+    contextOut = fields.Str()
+    source = 'webhook'
