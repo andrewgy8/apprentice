@@ -4,6 +4,13 @@
 
 Apprentice is a library for deploying and developing actions via Dialogflow and Google Cloud Functions.
 
+## Why Apprentice?
+
+* First-class support for GCloud Functions (FYI: You can do A LOT 
+with [2 million free invocations](https://cloud.google.com/functions/pricing-summary/)) 
+* Simple installation
+* Local debug server
+
 ## Installation
 
 ```bash
@@ -12,7 +19,7 @@ pip install apprentice
 
 ## Quickstart
 
-A Google Action project will consist of two things:
+An Apprentice project will consist of two things:
 1. A Dialogflow defined action
 1. An endpoint that your Dialogflow Action can talk to.
 
