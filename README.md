@@ -19,6 +19,8 @@ pip install apprentice
 
 ## Quickstart
 
+We recommend you read the full tutorial [here](https://medium.com/@andrew_32881/hey-google-talk-to-24dfd336acd).  
+
 A Google Action project will consist of two things:
 1. [Dialogflow Intent](https://dialogflow.com/docs/intents)
 1. A webhook to satisfy your users intent
