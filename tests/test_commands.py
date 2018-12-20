@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 from click.testing import CliRunner
 
-from apprentice.commands import MAIN_CONTENT, REQUIREMENTS_CONTENT, main
+from apprentice.commands import REQUIREMENTS_CONTENT, main
 
 
 @pytest.fixture
@@ -93,41 +93,53 @@ class TestInit:
         assert result.exit_code == 0
         assert 'Initialize a project' in result.output
 
-    def test_returns_main_py_file_when_called(self, runner):
+    def test_returns_default_function_name_when_called_without_webhook_arg(
+            self, runner):
         with runner.isolated_filesystem():
-            result = runner.invoke(main, ['init'])
+            runner.invoke(main, ['init'])
 
-            assert result.exit_code == 0
-            assert 'Project created' in result.output
-
-            with open('hello_world_agent/main.py', 'r') as f:
+            with open('main.py', 'r') as f:
                 contents = f.read()
 
-            assert MAIN_CONTENT in contents
+            assert 'def webhook(' in contents
+
+    def test_returns_custom_name_function_when_called_with_webhook_arg(
+            self, runner):
+        with runner.isolated_filesystem():
+            runner.invoke(main, ['init', '--webhook=testing'])
+
+            with open('main.py', 'r') as f:
+                contents = f.read()
+
+            assert 'def testing(' in contents
+
+    def test_returns_main_in_source_when_called_with_source_arg(self, runner):
+        with runner.isolated_filesystem():
+            runner.invoke(main, ['init', '--webhook=testing', '--source=src'])
+
+            with open('src/main.py', 'r') as f:
+                contents = f.read()
+
+            assert 'def testing(' in contents
 
     def test_returns_requirements_file_when_called(self, runner):
         with runner.isolated_filesystem():
-            result = runner.invoke(main, ['init'])
+            runner.invoke(main, ['init'])
 
-            assert result.exit_code == 0
-            assert 'Project created' in result.output
-
-            with open('hello_world_agent/requirements.txt', 'r') as f:
+            with open('requirements.txt', 'r') as f:
                 contents = f.read()
 
             assert REQUIREMENTS_CONTENT in contents
 
-    def test_returns_exit_code_2_when_directory_already_exists(self, runner):
-        dir_name = 'hello_world_agent'
+    def test_creates_requirements_file_in_srouce_when_called_with_arg(
+            self, runner):
         with runner.isolated_filesystem():
+            runner.invoke(main, ['init', '--source=some_dir'])
 
-            os.makedirs(dir_name)
+            with open('some_dir/requirements.txt', 'r') as f:
+                contents = f.read()
 
-            result = runner.invoke(main, ['init'])
-
-            assert result.exit_code == 1
-            assert f'{dir_name} already exists.' in result.output
-            assert 'Aborted!' in result.output
+            assert REQUIREMENTS_CONTENT in contents
 
 
 class TestRun:

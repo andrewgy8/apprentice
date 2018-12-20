@@ -11,7 +11,7 @@ apr = Apprentice(__name__)
 
 
 @apr.route('/', methods=['POST'])
-def hello_world(*args, **kwargs):
+def {function_name}(*args, **kwargs):
     reply = 'Hello world!'
     return apr.generate_text_response(reply)
 
@@ -29,28 +29,40 @@ def main():
 @click.command(help='Show installed version')
 def version():
     from .__version__ import __version__
-    click.echo(f'Apprentice v{__version__}')
+    click.echo(f'Apprentice v{__version__}')  # noqa
 
 
 @click.command(help='Initialize a project')
-def init():
-    dir_name = 'hello_world_agent'
-    if os.path.exists(dir_name):
-        click.echo(f'{dir_name} already exists.')
-        raise click.Abort()
+@click.option('--webhook', '-w', default='webhook',
+              help='Name your webhook function')
+@click.option('--source', '-s', default=None,
+              help='Specify source directory for main and requirements file')
+def init(webhook, source):
+    if source:
+        if os.path.exists(source):
+            click.echo(f'{source} already exists.')
+            raise click.Abort()
+        os.makedirs(source)
+        click.echo(f'Creating a project in {source}')
 
-    click.echo(f'Creating a project in {dir_name}')
+    reqs_filename = 'requirements.txt'
+    main_filename = 'main.py'
+    requirements_path = reqs_filename if not source \
+        else (source + f'/{reqs_filename}')
+    main_path = main_filename if not source \
+        else (source + f'/{main_filename}')
 
-    os.makedirs(dir_name)
-    with open(f'{dir_name}/main.py', 'w') as file:
-        file.write(MAIN_CONTENT)
+    main_content = MAIN_CONTENT.format(function_name=webhook)
+
+    with open(main_path, 'w') as file:
+        file.write(main_content)
         file.close()
 
-    with open(f'{dir_name}/requirements.txt', 'w') as file:
+    with open(requirements_path, 'w') as file:
         file.write(REQUIREMENTS_CONTENT)
         file.close()
 
-    click.echo('Project created')
+    click.echo('Project created!')
 
 
 @click.command(help='Generate gcloud deploy command')
@@ -66,8 +78,8 @@ def deploy(func, source, entry_point, region):
     base_command = 'gcloud functions deploy'
 
     deploy_command = f'{base_command} {func} --runtime python37 ' \
-                     f'--trigger-http --source {source} ' \
-                     f'--entry-point {entry_point} --region {region}'
+        f'--trigger-http --source {source} ' \
+        f'--entry-point {entry_point} --region {region}'
     deploy_command = ' '.join(deploy_command.split())
     click.echo(f'Deploy with command: {deploy_command}')
 

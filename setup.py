@@ -37,7 +37,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 try:
     with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
         long_description = '\n' + f.read()
-except FileNotFoundError:
+except FileNotFoundError:  # noqa
     long_description = DESCRIPTION
 
 # Load the package's __version__.py module as a dictionary.
@@ -117,8 +117,6 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy'
     ],
     # $ setup.py publish support.
     cmdclass={
