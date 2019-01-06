@@ -1,3 +1,5 @@
+![rocket ship](https://storage.googleapis.com/andrews-personal-space/IMG_8681-1.png)
+
 # Apprentice
 [![Build Status](https://travis-ci.com/andrewgy8/apprentice.svg?branch=master)](https://travis-ci.com/andrewgy8/apprentice)
 [![PyPI version](https://badge.fury.io/py/apprentice.svg)](https://badge.fury.io/py/apprentice)
