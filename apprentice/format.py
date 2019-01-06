@@ -2,6 +2,8 @@ import json
 
 from flask import Flask, make_response
 
+from .responses import SimpleResponse
+
 
 class Apprentice(Flask):
 
@@ -13,6 +15,9 @@ class Apprentice(Flask):
         response_object = self.query_result(reply)
         return self.generate_response(response_object)
 
+    def response_from_object(self, response_obj):
+        return self.generate_response(response_obj.build())
+
     def generate_response(self, data):
         resp = json.dumps(data, indent=4)
         resp = make_response(resp)
@@ -20,25 +25,5 @@ class Apprentice(Flask):
         return resp
 
     def query_result(self, text, expect_user_response=True):
-        return {
-            'fulfillmentText': text,
-            'fulfillmentMessages': [
-                {
-                    "platform": "ACTIONS_ON_GOOGLE",
-                    "text": {
-                        "text": [
-                            text
-                        ]
-                    }
-                }
-            ],
-            'payload': {
-                'google': {
-                    "expect_user_response": expect_user_response,
-                    "is_ssml": True,
-                    "permissions_request": None,
-                }
-            },
-            'outputContexts': [],
-            'source': 'webhook'
-        }
+        response = SimpleResponse(text, expect_user_response)
+        return response.build()
