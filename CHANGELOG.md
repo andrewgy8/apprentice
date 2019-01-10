@@ -1,6 +1,6 @@
 # Changelog
 
-### Unreleased
+### 0.4.0
 
 - SimpleResponse and BasicCardResponse per the docs
 - Add .editorconfig
